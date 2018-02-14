@@ -3,7 +3,7 @@ import ItemList from './ItemList';
 import CommentList from '../comment/CommentList'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {itemService, getComments} from './ItemService';
+import {itemService, getComments, postComment} from './ItemService';
 
 const itemContainerStyle = {
     boxShadow: '0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4)',
@@ -36,7 +36,7 @@ const itemListStyle = {
 }
 
 const greedStyle = {
-    display: 'inline-block'
+    display: 'flex'
 }
 
 class ItemContainer extends React.Component {
@@ -57,6 +57,10 @@ class ItemContainer extends React.Component {
         });
     }
 
+    handlePostComment = (id, text) => {
+        postComment(id, text)
+    }
+
     handleChange = (event, newValue) => {
         this.setState({
             value: newValue,
@@ -70,7 +74,7 @@ class ItemContainer extends React.Component {
         let items = {
             id: this.state.counter,
             title: this.state.value,
-            comments: ['Hello', 'Some hardcode']
+            comments: []
         }
         let itemsString = JSON.stringify(items)
         localStorage.setItem(this.state.counter, itemsString)
@@ -87,7 +91,8 @@ class ItemContainer extends React.Component {
 
     render() {
         const comments = <CommentList comments={this.state.comments}
-                                      isInput={this.state.isInput}/>
+                                      isInput={this.state.isInput}
+                                      handlePostComment={this.handlePostComment}/>
         return (
             <div style={greedStyle}>
                 <div style={itemContainerStyle} >
@@ -106,7 +111,7 @@ class ItemContainer extends React.Component {
                     <ItemList style={itemListStyle} 
                               items={this.state.items}
                               handleDelete={this.handleDelete}
-                              handleActiveItem={this.handleActiveItem}/>
+                              handleActiveItem={this.handleActiveItem} />
                 </div>
                 {comments}
             </div>

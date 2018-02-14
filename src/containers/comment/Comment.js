@@ -9,7 +9,9 @@ const cardHeaderStyle = {
 };
 
 const cardStyle = {
-    boxShadow: 'none'
+    boxShadow: 'none',
+    width: '90%',
+    margin: '0 auto'
 }
 
 
@@ -18,12 +20,7 @@ class Comment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.id
         };
-    }
-
-    handleDelete = () => {
-        localStorage.removeItem(this.props.id)
     }
     
     render() {

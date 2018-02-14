@@ -11,4 +11,11 @@ const getComments = (itemId) => {
     return itemObject['comments']
 }
 
-export {itemService, getComments}; 
+const postComment = (itemId, commentText) => {
+    let itemObject = JSON.parse(localStorage.getItem(itemId))
+    JSON.stringify(itemObject['comments'].push(commentText))
+    console.log(itemObject)
+    localStorage.setItem(itemId, JSON.stringify(itemObject))
+}
+
+export {itemService, getComments, postComment}; 
