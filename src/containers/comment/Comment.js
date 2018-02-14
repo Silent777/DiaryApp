@@ -3,7 +3,6 @@ import { Card, CardHeader } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 
 const cardHeaderStyle = {
-    cursor: 'pointer',
     display: 'flex',
     justifyContent: 'space-between',
 };

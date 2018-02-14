@@ -40,7 +40,6 @@ const greedStyle = {
 }
 
 class ItemContainer extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -48,7 +47,8 @@ class ItemContainer extends React.Component {
             counter: localStorage.length,
             items: [],
             comments: [],
-            isInput: false
+            isInput: false,
+            itemId: null
         };
     }
     componentWillMount() {
@@ -59,6 +59,9 @@ class ItemContainer extends React.Component {
 
     handlePostComment = (id, text) => {
         postComment(id, text)
+        this.setState({
+            comments: getComments()
+        })
     }
 
     handleChange = (event, newValue) => {
@@ -68,6 +71,9 @@ class ItemContainer extends React.Component {
     }
     handleDelete = (id) => {
         localStorage.removeItem(id)
+        this.setState({
+            items: itemService()
+        })
     }
 
     handleClick = () => {
@@ -80,19 +86,22 @@ class ItemContainer extends React.Component {
         localStorage.setItem(this.state.counter, itemsString)
         this.setState({
             counter: this.state.counter + 1,
+            items: itemService(),
+            value: ''
         })
     }
     handleActiveItem = (id) => {
         this.setState({
             comments: getComments(id),
-            isInput: true
+            isInput: true,
+            itemId: id
         })
     }
-
     render() {
         const comments = <CommentList comments={this.state.comments}
                                       isInput={this.state.isInput}
-                                      handlePostComment={this.handlePostComment}/>
+                                      handlePostComment={this.handlePostComment}
+                                      itemId={this.state.itemId}/>
         return (
             <div style={greedStyle}>
                 <div style={itemContainerStyle} >
@@ -100,7 +109,8 @@ class ItemContainer extends React.Component {
                     <div style={inputStyle}>
                         <TextField
                             hintText="Type name here..."
-                            onChange={this.handleChange} />
+                            onChange={this.handleChange}
+                            value={this.state.value} />
                         <RaisedButton
                             label="Add new"
                             primary={true}

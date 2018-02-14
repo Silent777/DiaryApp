@@ -1,11 +1,11 @@
 import React from 'react';
 import Comment from './Comment';
 import TextField from 'material-ui/TextField';
-
+import {getComments} from '../item/ItemService';
+  
 const containerStyle = {
-    display: 'inline-block',
     boxShadow: '0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4)',
-    height: 'auto',
+    height: '400px',
     width: '500px',
     margin: '20px',
     textAlign: 'center',
@@ -22,11 +22,11 @@ const h1Style = {
 }
 
 class CommentList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
             value: '',
+            comments: getComments()
         };
     }
 
@@ -38,7 +38,10 @@ class CommentList extends React.Component {
 
     keydownHandler = (e) => {
         if(e.keyCode===13 && e.ctrlKey) {
-            this.props.handlePostComment(1, this.state.value)
+            this.props.handlePostComment(this.props.itemId, this.state.value)
+            this.setState({
+                value: '',
+            })
         }
       }
 
@@ -51,6 +54,7 @@ class CommentList extends React.Component {
               style={inputStyle}
               onKeyDown={this.keydownHandler}
               onChange={this.handleChange}
+              value={this.state.value}
 
         /> :
             null;
