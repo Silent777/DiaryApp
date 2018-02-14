@@ -6,4 +6,9 @@ const itemService = () => {
     return items;
 };
 
-export default itemService;
+const getComments = (itemId) => {
+    let itemObject = JSON.parse(localStorage.getItem(itemId))
+    return itemObject['comments']
+}
+
+export {itemService, getComments}; 

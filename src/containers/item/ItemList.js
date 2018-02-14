@@ -1,5 +1,4 @@
 import React from 'react';
-import itemService from './ItemService';
 import Item from './Item';
 
 const containerStyle = {
@@ -8,29 +7,23 @@ const containerStyle = {
 };
 
 class ItemList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            items: []
         };
-    }
-
-    componentWillMount() {
-        this.setState({
-            items: itemService()
-        });
     }
 
     render() {
         return (
             <div style={containerStyle}>
                 {
-                    this.state.items.map(item => (
+                    this.props.items.map(item => (
                         <Item
                             key={item.id.toString()}
                             title={item.title}
                             id={item.id}
+                            handleDelete={this.props.handleDelete}
+                            handleActiveItem={this.props.handleActiveItem}
                         />)
                     )
                 }
