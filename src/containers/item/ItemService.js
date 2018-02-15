@@ -13,8 +13,10 @@ const getComments = (itemId) => {
 
 const postComment = (itemId, commentText) => {
     let itemObject = JSON.parse(localStorage.getItem(itemId))
+    if (itemObject) {
     JSON.stringify(itemObject['comments'].push(commentText))
     localStorage.setItem(itemId, JSON.stringify(itemObject))
+    }
 }
 
 export {itemService, getComments, postComment}; 

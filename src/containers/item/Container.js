@@ -38,6 +38,9 @@ const itemListStyle = {
 const greedStyle = {
     display: 'flex'
 }
+const btnStyle = {
+    background: '#00E5FF'
+}
 
 class ItemContainer extends React.Component {
     constructor(props) {
@@ -60,7 +63,7 @@ class ItemContainer extends React.Component {
     handlePostComment = (id, text) => {
         postComment(id, text)
         this.setState({
-            comments: getComments()
+            comments: getComments(id)
         })
     }
 
@@ -72,7 +75,13 @@ class ItemContainer extends React.Component {
     handleDelete = (id) => {
         localStorage.removeItem(id)
         this.setState({
-            items: itemService()
+            items: itemService(),
+            isInput: false
+        })
+    }
+    refresh = () => {
+        this.setState({
+            items: itemService(),
         })
     }
 
@@ -101,7 +110,8 @@ class ItemContainer extends React.Component {
         const comments = <CommentList comments={this.state.comments}
                                       isInput={this.state.isInput}
                                       handlePostComment={this.handlePostComment}
-                                      itemId={this.state.itemId}/>
+                                      itemId={this.state.itemId}
+                                      refreshCommentCounter={this.refresh}/>
         return (
             <div style={greedStyle}>
                 <div style={itemContainerStyle} >
@@ -116,12 +126,14 @@ class ItemContainer extends React.Component {
                             primary={true}
                             style={addbtnStyle}
                             onClick={this.handleClick}
+                            buttonStyle={btnStyle}
                         />
                     </div>
                     <ItemList style={itemListStyle} 
                               items={this.state.items}
                               handleDelete={this.handleDelete}
-                              handleActiveItem={this.handleActiveItem} />
+                              handleActiveItem={this.handleActiveItem}
+                              comments={this.state.comments} />
                 </div>
                 {comments}
             </div>
