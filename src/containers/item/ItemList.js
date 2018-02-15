@@ -24,7 +24,7 @@ class ItemList extends React.Component {
                             id={item.id}
                             handleDelete={this.props.handleDelete}
                             handleActiveItem={this.props.handleActiveItem}
-                            comments={this.props.comments}
+                            comments={item.comments.length}
                             isInput={this.props.isInput}
                         />)
                     )
